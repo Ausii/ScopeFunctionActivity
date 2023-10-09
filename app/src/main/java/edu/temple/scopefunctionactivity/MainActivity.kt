@@ -17,6 +17,12 @@ class MainActivity : AppCompatActivity() {
         // printing their output to the Log, which is visible in the LogCat:
         // eg. Log.d("function output", getTestDataArray().toString())
 
+        Log.d("function output", getTestDataArray().toString())
+        val mut = getTestDataArray()
+        val testList: List<Double> = mut.map { it.toDouble() }
+        Log.d("function output", averageLessThanMedian(testList).toString())
+        // Unsure 
+
     }
 
 
@@ -34,32 +40,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Return true if average value in list is greater than median value, false otherwise
-    private fun averageLessThanMedian(listOfNumbers: List<Double>): Boolean {
+    private fun averageLessThanMedian(listOfNumbers: List<Double>): Boolean = run {
         val avg = listOfNumbers.average()
-        val sortedList = listOfNumbers.sorted()
-        val median = if (sortedList.size % 2 == 0)
-            (sortedList[sortedList.size / 2] + sortedList[(sortedList.size - 1) / 2]) / 2
-        else
-            sortedList[sortedList.size / 2]
-
-        return avg < median
+        val median = listOfNumbers.sorted().run {
+            if (size % 2 == 0)
+                (this[size / 2] + this[(size - 1) / 2]) / 2
+            else
+                this[size / 2]
+        }
+        avg < median
     }
 
     // Create a view from an item in a collection, but recycle if possible (similar to an AdapterView's adapter)
-    private fun getView(position: Int, recycledView: View?, collection: List<Int>, context: Context): View {
-        val textView: TextView
-
-        if (recycledView != null) {
-            textView = recycledView as TextView
-        } else {
-            textView = TextView(context)
-            textView.setPadding(5, 10, 10, 0)
-            textView.textSize = 22f
+    private fun getView(
+        position: Int,
+        recycledView: View?,
+        collection: List<Int>,
+        context: Context
+    ): View =
+        (recycledView as? TextView ?: TextView(context).apply {
+            setPadding(5, 10, 5, 0)
+            textSize = 22f
+        }).run {
+            text = collection[position].toString()
+            this
         }
-
-        textView.text = collection[position].toString()
-
-        return textView
-    }
-
 }
