@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
         val mut = getTestDataArray()
         val testList: List<Double> = mut.map { it.toDouble() }
         Log.d("function output", averageLessThanMedian(testList).toString())
-        // Unsure 
-
+        // Unsure what would be best for testing the getView() function... but I feel like I
+        // understand how to use 'apply' and 'run' to convert code, and finding .map was cool
     }
 
 
